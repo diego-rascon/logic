@@ -6,8 +6,10 @@ class Atom:
     def invert(self):
         self.inverted = not self.inverted
 
+    def __copy__(self):
+        atom_copy = Atom(self.name)
+        atom_copy.inverted = self.inverted
+        return atom_copy
+
     def __str__(self):
-        if self.inverted:
-            return f'-{self.name}'
-        else:
-            return self.name
+        return f'-{self.name}' if self.inverted else self.name
