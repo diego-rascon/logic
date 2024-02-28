@@ -1,12 +1,14 @@
+from Formula import Formula
 from Atom import Atom
 from Clause import Clause
 
-clause = Clause()
-atom_1 = Atom('atom_1')
-atom_2 = Atom('atom_2')
-atom_2.invert()
+atom_a = Atom('A')
+atom_b = Atom('B')
+atom_b.invert()
+clause_1 = Clause()
+clause_1.or_atom(atom_a)
+clause_1.or_atom(atom_b)
 
-clause.add_atom(atom_1)
-clause.add_atom(atom_2)
+formula_1 = clause_1.and_atom(atom_b)
 
-print(clause)
+print(formula_1)
