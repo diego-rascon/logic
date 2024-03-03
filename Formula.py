@@ -2,6 +2,17 @@ class Formula:
     def __init__(self):
         self.clauses = []
 
+    def invert(self):
+        formula = Formula()
+        for clause in self.clauses:
+            pass
+
+    def or_formula(self):
+        pass
+
+    def and_formula(self):
+        pass
+
     def and_clause(self, new_clause):
         formula = Formula()
 
