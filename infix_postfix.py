@@ -1,4 +1,4 @@
-def get_precedence(char):
+def get_precedence(char) -> int:
     match char:
         case '~':
             return 5
@@ -28,7 +28,8 @@ def infix_to_postfix(infix_exp):
         elif char == ')':
             while stack and stack[-1] != '(':
                 result.append(stack.pop())
-            stack.pop()
+            if stack:
+                stack.pop()
         else:
             while stack and (get_precedence(char) < get_precedence(stack[-1]) or (
                     get_precedence(char) == get_precedence(stack[-1]))):

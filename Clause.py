@@ -1,3 +1,6 @@
+from typing import Self
+
+from Atom import Atom
 from Formula import Formula
 
 
@@ -5,7 +8,7 @@ class Clause:
     def __init__(self):
         self.atoms = []
 
-    def invert(self):
+    def invert(self) -> Formula:
         formula = Formula()
 
         for atom in self.atoms:
@@ -17,7 +20,11 @@ class Clause:
 
         return formula
 
-    def or_atom(self, new_atom):
+    def or_atom(self, new_atom: Atom) -> Self:
+        for atom in self.atoms:
+            if atom.name == new_atom.name and atom.inverted == new_atom.inverted:
+                return self
+
         new_clause = Clause()
 
         for atom in self.atoms:
@@ -27,7 +34,7 @@ class Clause:
 
         return new_clause
 
-    def and_atom(self, atom):
+    def and_atom(self, atom) -> Formula:
         formula = Formula()
         formula.and_clause(self.__copy__())
 
@@ -38,7 +45,7 @@ class Clause:
 
         return formula
 
-    def or_clause(self, clause):
+    def or_clause(self, clause) -> Self:
         new_clause = Clause()
 
         for atom in self.atoms:
@@ -49,7 +56,7 @@ class Clause:
 
         return new_clause
 
-    def and_clause(self, clause):
+    def and_clause(self, clause) -> Formula:
         formula = Formula()
         formula = formula.and_clause(self)
         formula = formula.and_clause(clause)
