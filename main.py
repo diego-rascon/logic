@@ -1,26 +1,17 @@
-from Atom import Atom
-from Clause import Clause
-from infix_postfix import infix_to_postfix
+import re
 
-file = open('formulas/formula_1.txt')
-rows = file.readlines()
+from infix_to_postfix import infix_to_postfix, evaluate
 
+file = open("formulas/fnc/fnc_2.txt")
+lines = file.readlines()
 
-# for row in rows:
-#     row = row.rstrip()
-#     infix_to_postfix(row)
-#     '''
-#     print(f'Row: {row}')
-#     infix = re.findall('(\\w+|\\||\\&|\\>|\\-|\\(|\\)|\\=)', row)
-#     print(f'Infix: {row}')
-#     postfix = infix_to_postfix(row)
-#     print(f'Postfix: {postfix}')
-#     '''
+for line in lines:
+    print(f'Line: {line}')
+    infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
+    print(f'Infijo: {infix_exp}')
 
-c1 = Clause()
-aa = Atom('a')
-aa.invert()
-c1 = c1.or_atom(aa)
-aa.invert()
-c1 = c1.or_atom(aa)
-print(c1)
+    postfix_exp = infix_to_postfix(infix_exp)
+    print(f'Postfijo: {postfix_exp}')
+
+    fnc = evaluate(postfix_exp)
+    print(f'FNC: {fnc}')
