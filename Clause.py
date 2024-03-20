@@ -12,27 +12,27 @@ class Clause:
         formula = Formula()
 
         for atom in self.atoms:
-            new_clause = Clause()
-            new_atom = atom.__copy__()
-            new_atom.invert()
-            new_clause.atoms.append(new_atom)
-            formula = formula.and_clause(new_clause)
+            clause = Clause()
+            atom = atom.__copy__()
+            atom.invert()
+            clause.atoms.append(atom)
+            formula = formula.and_clause(clause)
 
         return formula
 
-    def or_atom(self, new_atom: Atom) -> Self:
+    def or_atom(self, origin_atom: Atom) -> Self:
         for atom in self.atoms:
-            if atom.name == new_atom.name and atom.inverted == new_atom.inverted:
+            if atom.name == origin_atom.name and atom.inverted == origin_atom.inverted:
                 return self
 
-        new_clause = Clause()
+        clause = Clause()
 
         for atom in self.atoms:
-            new_clause.atoms.append(atom.__copy__())
+            clause.atoms.append(atom.__copy__())
 
-        new_clause.atoms.append(new_atom.__copy__())
+        clause.atoms.append(origin_atom.__copy__())
 
-        return new_clause
+        return clause
 
     def and_atom(self, atom) -> Formula:
         formula = Formula()
