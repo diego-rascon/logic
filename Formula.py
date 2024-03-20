@@ -9,7 +9,8 @@ class Formula:
         formula = Formula()
 
         for clause in self.clauses:
-            formula.clauses.append(clause.__copy__())
+            inverted_clause = clause.invert()
+            formula = formula.and_formula(inverted_clause)
 
         return formula
 
@@ -33,17 +34,17 @@ class Formula:
 
         return formula
 
-    def and_clause(self, new_clause) -> Self:
+    def and_clause(self, origin_clause) -> Self:
         formula = Formula()
 
         for clause in self.clauses:
             formula.clauses.append(clause.__copy__())
 
-        formula.clauses.append(new_clause.__copy__())
+        formula.clauses.append(origin_clause.__copy__())
 
         return formula
 
-    def __str__(self):
+    def __str__(self) -> str:
         result = '['
 
         for index, clause in enumerate(self.clauses):
