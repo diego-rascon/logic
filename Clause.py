@@ -12,9 +12,9 @@ class Clause:
         formula = Formula()
 
         for atom in self.atoms:
+            new_clause = Clause()
             new_atom = atom.__copy__()
             new_atom.invert()
-            new_clause = Clause()
             new_clause.atoms.append(new_atom)
             formula = formula.and_clause(new_clause)
 
@@ -36,12 +36,12 @@ class Clause:
 
     def and_atom(self, atom) -> Formula:
         formula = Formula()
-        formula.and_clause(self.__copy__())
+        formula = formula.and_clause(self.__copy__())
 
         clause = Clause()
-        clause.or_atom(atom.__copy__())
+        clause = clause.or_atom(atom.__copy__())
 
-        formula.and_clause(clause)
+        formula = formula.and_clause(clause)
 
         return formula
 
