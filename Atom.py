@@ -1,12 +1,10 @@
 class Atom:
     def __init__(self, name: str):
-        self.name = name
+        self.name = name.capitalize()
         self.inverted = False
 
     def invert(self):
-        atom_copy = Atom(self.name)
-        atom_copy.inverted = not atom_copy.inverted
-        return atom_copy
+        self.inverted = not self.inverted
 
     def __copy__(self):
         atom_copy = Atom(self.name)
@@ -14,4 +12,8 @@ class Atom:
         return atom_copy
 
     def __str__(self):
-        return f'-{self.name}' if self.inverted else self.name
+        string = ''
+        if self.inverted:
+            string += '-'
+        string += self.name
+        return string
