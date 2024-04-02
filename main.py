@@ -28,7 +28,6 @@ def new_clause():
     c1 = c1.or_atom(Atom('b'))
 
     print(c1)
-    print(c1.is_tautology())
 
 
 read_file()
