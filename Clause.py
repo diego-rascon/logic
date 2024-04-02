@@ -62,17 +62,6 @@ class Clause:
         formula = formula.and_clause(clause)
         return formula
 
-    def is_tautology(self) -> bool:
-        temp_atoms = [self.atoms[0]]
-
-        for next_atom in self.atoms[1:]:
-            for temp_atom in temp_atoms:
-                if temp_atom.name == next_atom.name and temp_atom.inverted != next_atom.inverted:
-                    return True
-            temp_atoms.append(next_atom)
-
-        return False
-
     def __copy__(self):
         clause_copy = Clause()
 
