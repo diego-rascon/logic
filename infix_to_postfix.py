@@ -88,11 +88,8 @@ def evaluate(postfix):
         elif priority == 4:
             top_stack = stack.pop()
             atom = stack.pop()
-            inverted_atom = atom.invert()
-            inverted_formula = top_stack.invert()
-            clause = atom.or_formula(inverted_formula)
-            new_formula = top_stack.or_formula(inverted_atom)
-            clause = clause.and_formula(new_formula)
+            atom = atom.invert()
+            clause = atom.or_formula(top_stack)
             stack.append(clause)
         elif priority == 5:
             atom = stack.pop()

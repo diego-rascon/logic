@@ -10,7 +10,7 @@ def read_file():
     lines = file.readlines()
 
     for line in lines:
-        print(f'Line: {line}')
+        print(f'\nLine: {line}')
         infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
         print(f'Infijo: {infix_exp}')
 
