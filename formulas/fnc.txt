@@ -1,10 +1,1 @@
-(a|b)=(a|c|e)
--(a&-b)
--(a|-b)
--((a&b)|(c&d))
--((a|b)&(c&d))
-(-a|b&-c)
-dinero&tiempo=cine
--(dinero&tiempo=cine)
-(soltero&-dinero=-novia)|(soltero&dinero=novia)
-(p=q)&(p>-q)&(a|b|c)
+r & -s
