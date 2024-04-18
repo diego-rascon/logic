@@ -57,43 +57,44 @@ def get_priority(operator):
 
 
 def evaluate(postfix):
-    stack = []
+    pila = []
+    for ch in postfix:
+        p = get_priority(ch)
+        if p == 0:  # operando
+            a = Atom(ch)
+            c = Clause()
+            f = Formula()
+            c = c.or_atom(a)
+            c = f.and_clause(c)
+            pila.append(c)
+        elif p == 1:  # or
+            b = pila.pop()
+            a = pila.pop()
+            c = a.or_formula(b)
+            pila.append(c)
+        elif p == 2:  # and
+            b = pila.pop()
+            a = pila.pop()
+            c = a.and_formula(b)
+            pila.append(c)
+        elif p == 3:  # entonces
+            b = pila.pop()
+            a = pila.pop()
+            a = a.invert()
+            c = a.or_formula(b)
+            pila.append(c)
+        elif p == 4:  # si y solo si
+            b = pila.pop()
+            a = pila.pop()
+            an = a.invert()
+            bn = b.invert()
+            c = a.or_formula(bn)
+            d = b.or_formula(an)
+            c = c.and_formula(d)
+            pila.append(c)
+        elif p == 5:  # not
+            a = pila.pop()
+            c = a.invert()
+            pila.append(c)
 
-    for char in postfix:
-        priority = get_priority(char)
-
-        if priority == 0:
-            atom = Atom(char)
-            clause = Clause()
-            formula = Formula()
-            clause = clause.or_atom(atom)
-            clause = formula.and_clause(clause)
-            stack.append(clause)
-        elif priority == 1:
-            top_stack = stack.pop()
-            atom = stack.pop()
-            clause = atom.or_formula(top_stack)
-            stack.append(clause)
-        elif priority == 2:
-            top_stack = stack.pop()
-            atom = stack.pop()
-            clause = atom.and_formula(top_stack)
-            stack.append(clause)
-        elif priority == 3:
-            top_stack = stack.pop()
-            atom = stack.pop()
-            atom = atom.invert()
-            clause = atom.or_formula(top_stack)
-            stack.append(clause)
-        elif priority == 4:
-            top_stack = stack.pop()
-            atom = stack.pop()
-            atom = atom.invert()
-            clause = atom.or_formula(top_stack)
-            stack.append(clause)
-        elif priority == 5:
-            atom = stack.pop()
-            clause = atom.invert()
-            stack.append(clause)
-
-    return stack.pop()
+    return pila.pop()
