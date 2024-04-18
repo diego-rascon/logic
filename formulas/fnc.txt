@@ -1,1 +1,10 @@
-r & -s
+(A | B) = (A | C | E)
+-(A & -B)
+-(A | -B)
+-((A & B) | (C & D))
+-((A | B) & (C | D))
+(-A | B) & -C
+dinero & tiempo = cine
+-(dinero & tiempo = cine)
+(soltero & -dinero = -novia) | (soltero & dinero = novia)
+(p = q) & (p > -q) & (a | b | c)
