@@ -1,34 +1,116 @@
 import re
 
-from Atom import Atom
-from Clause import Clause
-from infix_to_postfix import infix_to_postfix, evaluate
+from model.Atom import Atom
+from model.Clause import Clause
+from model.Formula import Formula
+
+file = open("formulas/fnc.txt")
+lines = file.readlines()
 
 
-def read_file():
-    file = open("formulas/fnc.txt")
-    lines = file.readlines()
+def infix_to_postfix(infix):
+    postfix = []
+    stack = []
 
-    for line in lines:
-        print(f'\nLine: {line}')
-        infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
-        print(f'Infijo: {infix_exp}')
+    for char in infix:
+        p = get_priority(char)
 
-        postfix_exp = infix_to_postfix(infix_exp)
-        print(f'Postfijo: {postfix_exp}')
+        if p == -1:
+            stack.append(char)
+        elif p == -2:
+            while len(stack) > 0:
+                top = stack.pop()
+                if top != "(":
+                    postfix.append(top)
+                else:
+                    break
 
-        fnc = evaluate(postfix_exp)
-        print(f'FNC: {fnc}')
+        elif p > 0:
+            if len(stack) == 0 or p > get_priority(stack[-1]):
+                stack.append(char)
+            else:
+                while len(stack) > 0 and p < get_priority(stack[-1]):
+                    top = stack.pop()
+                    postfix.append(top)
+
+                stack.append(char)
+        else:
+            postfix.append(char)
+
+    while len(stack) > 0:
+        postfix.append(stack.pop())
+
+    return postfix
 
 
-def new_clause():
-    c1 = Clause()
-    c1 = c1.or_atom(Atom('a'))
-    c1 = c1.or_atom(Atom('b').invert())
-    c1 = c1.or_atom(Atom('b'))
+def get_priority(a):
+    if a == "|":
+        return 1
+    if a == "&":
+        return 2
+    if a == ">":
+        return 3
+    if a == "=":
+        return 4
+    if a == "-":
+        return 5
+    if a == "(":
+        return -1
+    if a == ")":
+        return -2
+    else:
+        return 0
 
-    print(c1)
+
+def valuate(postfix):
+    stack = []
+    for ch in postfix:
+        p = get_priority(ch)
+        if p == 0:
+            a = Atom(ch)
+            c = Clause()
+            f = Formula()
+            c = c.or_atom(a)
+            c = f.and_clause(c)
+            stack.append(c)
+        elif p == 1:
+            b = stack.pop()
+            a = stack.pop()
+            c = a.or_formula(b)
+            stack.append(c)
+        elif p == 2:
+            b = stack.pop()
+            a = stack.pop()
+            c = a.and_formula(b)
+            stack.append(c)
+        elif p == 3:
+            b = stack.pop()
+            a = stack.pop()
+            a = a.invert_formula()
+            c = a.or_formula(b)
+            stack.append(c)
+        elif p == 4:
+            b = stack.pop()
+            a = stack.pop()
+            an = a.invert_formula()
+            bn = b.invert_formula()
+            c = a.or_formula(bn)
+            d = b.or_formula(an)
+            c = c.and_formula(d)
+            stack.append(c)
+        elif p == 5:
+            a = stack.pop()
+            c = a.invert_formula()
+            stack.append(c)
+
+    return stack.pop()
 
 
-read_file()
-# new_clause()
+for line in lines:
+    print(f'Linea: {line}')
+    infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
+    print(f'Infijo: {infix_exp}')
+    postfix_exp = infix_to_postfix(infix_exp)
+    print(f'Postfijo: {postfix_exp}')
+    fnc = valuate(postfix_exp)
+    print(f'FNC: {fnc}\n')
