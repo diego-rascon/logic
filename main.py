@@ -4,9 +4,6 @@ from model.Atom import Atom
 from model.Clause import Clause
 from model.Formula import Formula
 
-file = open("formulas/fnc.txt")
-lines = file.readlines()
-
 
 def infix_to_postfix(infix):
     postfix = []
@@ -106,11 +103,18 @@ def valuate(postfix):
     return stack.pop()
 
 
-for line in lines:
-    print(f'Linea: {line}')
-    infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
-    print(f'Infijo: {infix_exp}')
-    postfix_exp = infix_to_postfix(infix_exp)
-    print(f'Postfijo: {postfix_exp}')
-    fnc = valuate(postfix_exp)
-    print(f'FNC: {fnc}\n')
+def read_file():
+    file = open("formulas/fnc.txt")
+    lines = file.readlines()
+
+    for line in lines:
+        print(f'Linea: {line}')
+        infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
+        print(f'Infijo: {infix_exp}')
+        postfix_exp = infix_to_postfix(infix_exp)
+        print(f'Postfijo: {postfix_exp}')
+        fnc = valuate(postfix_exp)
+        print(f'FNC: {fnc}\n')
+
+
+read_file()
