@@ -3,6 +3,7 @@ import re
 from model.Atom import Atom
 from model.Clause import Clause
 from model.Formula import Formula
+from modules.gsat import gsat
 
 
 def infix_to_postfix(infix):
@@ -104,7 +105,7 @@ def valuate(postfix):
 
 
 def read_file():
-    file = open("formulas/fnc.txt")
+    file = open("formulas/gsat.txt")
     lines = file.readlines()
 
     for line in lines:
@@ -115,6 +116,9 @@ def read_file():
         print(f'Postfijo: {postfix_exp}')
         fnc = valuate(postfix_exp)
         print(f'FNC: {fnc}\n')
+        max_tries = int(input('Introduce el máximo de intentos: '))
+        max_flips = int(input('Introduce el máximo de flips: '))
+        print(f'GSAT: {gsat(fnc, max_tries, max_flips)}')
 
 
 read_file()
