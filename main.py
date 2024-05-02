@@ -109,7 +109,7 @@ def read_file():
     lines = file.readlines()
 
     for line in lines:
-        print(f'Linea: {line}')
+        print(f'\nLinea: {line}')
         infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
         print(f'Infijo: {infix_exp}')
         postfix_exp = infix_to_postfix(infix_exp)
