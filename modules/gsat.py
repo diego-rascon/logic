@@ -12,7 +12,7 @@ def gsat(formula: Formula, max_tries, max_flips):
             for atom in clause.atoms:
                 atoms[atom.name] = True if random.random() >= 0.5 else False
         
-        print(atoms)
+        # print(atoms)
 
         for flip in range(max_flips):
             last_value = None
@@ -24,27 +24,27 @@ def gsat(formula: Formula, max_tries, max_flips):
                     value = not value if atom.inverted else value
                     last_value = value
 
-                    print(atom.name)
-                    print(f'Inverted: {atom.inverted}')
-                    print(f'Valor: {value}')
-                    print()
+                    # print(atom.name)
+                    # print(f'Inverted: {atom.inverted}')
+                    # print(f'Valor: {value}')
+                    # print()
 
                     if value:
                         break
 
                 if not last_value:
-                    print('No se cumple la clausula')
+                    # print('No se cumple la clausula')
                     break
 
-                print('Se cumplió la clausula')
+                # print('Se cumplió la clausula')
 
             if last_value:
                 return atoms
             else:
                 random_atom = random.choice(list(atoms))
                 atoms[random_atom] = not atoms[random_atom]
-                print(f'Random atom: {random_atom}')
-                print(atoms)
-            print('------------------------------------')
+            #     print(f'Random atom: {random_atom}')
+            #     print(atoms)
+            # print('------------------------------------')
 
     return 'No se encontró solución a la formula'
