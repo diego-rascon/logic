@@ -1,6 +1,4 @@
 from model.Formula import Formula
-from model.Clause import Clause
-from model.Atom import Atom
 import random
 
 

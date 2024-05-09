@@ -105,20 +105,31 @@ def valuate(postfix):
 
 
 def read_file():
-    file = open("formulas/gsat.txt")
+    file = open("formulas/davis_putnam.txt")
     lines = file.readlines()
 
     for line in lines:
-        print(f'\nLinea: {line}')
+        print(f'Linea: {line}')
         infix_exp = re.findall("(\\w+|\\||&|>|-|\\(|\\)|=)", line)
         print(f'Infijo: {infix_exp}')
         postfix_exp = infix_to_postfix(infix_exp)
         print(f'Postfijo: {postfix_exp}')
         fnc = valuate(postfix_exp)
-        print(f'FNC: {fnc}\n')
-        max_tries = int(input('Introduce el máximo de intentos: '))
-        max_flips = int(input('Introduce el máximo de flips: '))
-        print(f'GSAT: {gsat(fnc, max_tries, max_flips)}')
+        print(f'FNC: {fnc}')
+        # max_tries = int(input('Introduce el máximo de intentos: '))
+        # max_flips = int(input('Introduce el máximo de flips: '))
+        # print(f'GSAT: {gsat(fnc, max_tries, max_flips)}')
+        # if fnc.david_and_putnam():
+        #     fnc.get_certificate()
+        # else:
+        #     print('La formula es insatisfactible')
+        satisfiable, assignment = fnc.davis_putnam()
+        if satisfiable:
+            print("La formula es satisfactible con:")
+            print(assignment)
+        else:
+            print("La formula es insatisfactible")
+        print()
 
 
 read_file()
